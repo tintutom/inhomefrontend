@@ -1,0 +1,26 @@
+Add these styles to your existing CSS or create a new stylesheet
+
+/* Apply a min-height to ensure the footer stays at the bottom even if the content is small */
+html, body {
+    height: 100%;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Main content container */
+  #root {
+    flex: 1;
+  }
+  
+  /* Sticky footer styles */
+  footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background-color: #3498db; /* Change this color to match your design */
+    color: white;
+    z-index: 1000; /* Ensure the footer is on top of other content */
+  }
