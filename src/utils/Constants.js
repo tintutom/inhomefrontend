@@ -1,6 +1,6 @@
 
 
-export const baseUrl = "http://51.21.14.42:8000/";
+export const baseUrl = "https://tintutom.online/";
 export const mediaUrl= "https://inhome.s3.amazonaws.com/";
 
 
