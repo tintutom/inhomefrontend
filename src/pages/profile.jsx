@@ -11,7 +11,7 @@ const UserProfile = () => {
   const userid = Cookies.get("id");
 
   useEffect(() => {
-    axios.get(`${baseUrl}get-user/${userid}`)
+    axios.get(`${baseUrl}/get-user/${userid}`)
       .then(response => {
         console.log(response.data)
         setUserData(response.data);
@@ -27,7 +27,7 @@ const UserProfile = () => {
             {userData && (
               <div className="flex items-center gap-5">
                 <figure className="max-w-[200px] max-h-[200px]">
-                  <img src={`${mediaUrl}${userData.userimage}`} alt="" className="w-full rounded-full" />
+                  <img src={userData.userimage} alt="" className="w-full rounded-full" />
                 </figure>
                 <div>
                   <p className="text-xl font-semibold">{userData.name}</p>

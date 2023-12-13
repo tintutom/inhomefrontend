@@ -1,7 +1,7 @@
 
 
 
-export const baseUrl = "https://tintutom.online/";
+export const baseUrl = "https://tintutom.online";
 export const mediaUrl= "https://inhome.s3.amazonaws.com/";
 
 
