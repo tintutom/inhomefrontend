@@ -30,7 +30,8 @@ const ChatComponent = () => {
   const connectToWebSocket = (appointmentId) => {
     if (!appointmentId) return;
 
-    const newClient = new W3CWebSocket(`ws://127.0.0.1:8001/ws/chat/${appointmentId}/`);
+    // const newClient = new W3CWebSocket(`ws://127.0.0.1:8001/ws/chat/${appointmentId}/`);
+    const newClient = new W3CWebSocket(`${baseUrl}ws/chat/${appointmentId}/`);
     setClient(newClient);
 
     newClient.onopen = () => {
