@@ -11,7 +11,7 @@ const UserProfile = () => {
   const userid = Cookies.get("id");
 
   useEffect(() => {
-    axios.get(`${baseUrl}/get-user/${userid}`)
+    axios.get(`${baseUrl}get-user/${userid}`)
       .then(response => {
         console.log(response.data)
         setUserData(response.data);
