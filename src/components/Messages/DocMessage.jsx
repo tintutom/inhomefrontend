@@ -77,7 +77,7 @@ const DocChatComponent = () => {
 
   return (
     <div>
-    <main className="content" style={{ marginTop: "15px" , marginBottom: "0"}}>
+    <main className="content" style={{ marginTop: "25px" , marginBottom: "0"}}>
       <div className="container p-0"></div>
       <div className="card">
                 <div className="row g-0">
@@ -106,7 +106,7 @@ const DocChatComponent = () => {
           {appointments.map((appointment) => (
             <li key={appointment.id} onClick={() => handleAppointmentClick(appointment)}>
                 <div className="doctor-list-item d-flex align-items-start">
-                  <img src={`${mediaUrl}${appointment.user.userimage}`} alt="Doctor" className="rounded-circle mr-1" width={40} height={40} />
+                  <img src={`${appointment.user.userimage}`} alt="Doctor" className="rounded-circle mr-1" width={40} height={40} />
                   <div className="flex-grow-1 ml-3">
                     <div className="small">
                       <small>{appointment.user.name}</small>
@@ -122,7 +122,7 @@ const DocChatComponent = () => {
             <div>
               <div className="selected-doctor-info d-flex align-items-center">
                 <img
-                  src={`${mediaUrl}${selectedAppointment.user.userimage}`}
+                  src={`${selectedAppointment.user.userimage}`}
                   alt={selectedAppointment.user.name}
                   className="rounded-circle mr-1"
                   width={40}

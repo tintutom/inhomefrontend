@@ -51,13 +51,13 @@ const DoctorsDetails = () => {
   }; 
 
   return (
-    <section>
+    <section mb-6>
       <div className='max-w-[1170px] px-5 mx-auto'>
         <div className='grid md:grid-cols-3 gap-[50px]'>
           <div className='md:col-span-2'>
             <div className="flex items-center gap-5">
               <figure className="max-w-[200px] max-h-[200px]">
-                <img src={`${mediaUrl}${image}`} alt="" className="w-full" />
+                <img src={`${image}`} alt="" className="w-full" />
               </figure>
 
               <div>

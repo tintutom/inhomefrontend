@@ -216,7 +216,7 @@ const Header = () => {
           
           axios.get(`${baseUrl}get-user/${res.data.id}`)
             .then((userResponse) => {
-              const userImagePath = `${mediaUrl}${userResponse.data.userimage}`;
+              const userImagePath = `${userResponse.data.userimage}`;
               setUserImage(userImagePath);
             })
             .catch((userError) => {
@@ -235,7 +235,7 @@ const Header = () => {
   };
 
   return (
-    <header className="header flex items-center" ref={headerRef}>
+    <header className="header flex items-center" ref={headerRef} style={{ width: '100%',paddingTop: '20px' }}>
       <div className="container">
         <div className="flex items-center justify-between">
           <div>

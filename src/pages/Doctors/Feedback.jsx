@@ -6,14 +6,16 @@ import FeedbackForm from './FeedbackForm';
 import { mediaUrl } from '../../utils/Constants';
 import axios from 'axios';
 import {baseUrl} from '../../utils/Constants'
+import { useParams } from 'react-router-dom';
 const Feedback = () => {
     const [showFeedbackForm, setShowFeedbackForm]=useState(false)
     const [feedbackData, setFeedbackData] = useState([]);
-
+    const { id } = useParams();
+    console.log('Doctorrrrrrrrrrrrr ID:', id);
     useEffect(()=>{
         const fetchFeedbackData=async()=>{
             try{
-                const response = await axios.get(`${baseUrl}feedback-list/2/`);
+                const response = await axios.get(`${baseUrl}feedback-list/${id}/`);
                 setFeedbackData(response.data);
             }catch (error){
                 console.error("Error fetching feedback data:", error.message || error)
@@ -31,7 +33,7 @@ const Feedback = () => {
                 <div  key={index} className='flex justify-between gap-10 mb-[30px]'>
                     <div className='flex gap-3'>
                         <figure className='w-10 h-10 rounded-full'>
-                            <img className='w-full' src={`${mediaUrl}${feedback.user.userimage}`} alt=''/>
+                            <img className='w-full' src={`${feedback.user.userimage}`} alt=''/>
                         </figure>
 
                         <div>

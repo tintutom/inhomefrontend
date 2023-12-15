@@ -372,7 +372,7 @@ import { mediaUrl,baseUrl } from '../utils/Constants';
         
                 <div className="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full">
                     <img
-                    src={`${mediaUrl}${doctor.image}`} 
+                    src={`${doctor.image}`} 
                     alt="Profile Picture"
                     className="w-full h-full object-cover"
                     />

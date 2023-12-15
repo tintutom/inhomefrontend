@@ -301,7 +301,7 @@ const SlotBooking=()=>{
           <div className="p-6">
             <div className="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full">
               <img
-                src={`${mediaUrl}${doctor.image}`}
+                src={`${doctor.image}`}
                 alt="Profile Picture"
                 className="w-full h-full object-cover"
               />
@@ -324,7 +324,7 @@ const SlotBooking=()=>{
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <p className="font-bold">Name:</p>
-                  <p>{users.username}</p>
+                  <p>{users.name}</p>
                   <p className="font-bold">Phone Number:</p>
                   <p>{users.phone}</p>
                 </div>

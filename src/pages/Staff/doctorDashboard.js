@@ -139,10 +139,8 @@ const DoctorDashboard = () => {
       [name]: value,
     });
   };
-  console.log("haii")
 
   const handleFormSubmit = () => {
-    console.log("urlisssss:",`${baseUrl}doctors/update/${doctorId}`)
     axios.put(`${baseUrl}doctors/update/${doctorId}/`, formData)
       .then(response => {
         setDoctorInfo(response.data);
@@ -179,7 +177,7 @@ const DoctorDashboard = () => {
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="flex justify-center items-center bg-blue-500 h-32">
           <img
-            src={`${mediaUrl}${doctorInfo.image}`}
+            src={`${doctorInfo.image}`}
             alt="Doctor"
             className="object-cover h-24 w-24 rounded-full"
           />
@@ -202,17 +200,17 @@ const DoctorDashboard = () => {
               <div className="font-bold text-xl mb-2 border-b border-gray-300 pb-2">Personal Info</div>
               <p className="text-gray-700 text-base"><strong>Email:</strong> {doctorInfo.email}</p>
               <p className="text-gray-700 text-base"><strong>Phone:</strong> {doctorInfo.phone}</p>
-              <p className="text-gray-700 text-base"><strong>Gender:</strong> {doctorInfo.additional_details.gender}</p>
+              <p className="text-gray-700 text-base"><strong>Gender:</strong> {doctorInfo.additional_details?.gender || 'N/A'}</p>
             </div>
           </div>
 
           <div className="flex-1 bg-blue-200 shadow-lg rounded-lg overflow-hidden border border-gray-300">
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2 border-b border-gray-300 pb-2">Professional Info</div>
-              <p className="text-gray-700 text-base"><strong>Experience:</strong> {doctorInfo.additional_details.experience} years</p>
-              <p className="text-gray-700 text-base"><strong>Education:</strong> {doctorInfo.additional_details.education}</p>
-              <p className="text-gray-700 text-base"><strong>Current Working Hospital:</strong> {doctorInfo.additional_details.current_working_hospital}</p>
-              <p className="text-gray-700 text-base"><strong>Consulting Fee:</strong> {doctorInfo.additional_details.fee}</p>
+              <p className="text-gray-700 text-base"><strong>Experience:</strong> {doctorInfo.additional_details?.experience || 'N/A'} years</p>
+              <p className="text-gray-700 text-base"><strong>Education:</strong> {doctorInfo.additional_details?.education || 'N/A'}</p>
+              <p className="text-gray-700 text-base"><strong>Current Working Hospital:</strong> {doctorInfo.additional_details?.current_working_hospital || 'N/A'}</p>
+              <p className="text-gray-700 text-base"><strong>Consulting Fee:</strong> {doctorInfo.additional_details?.fee || 'N/A'}</p>
             </div>
           </div>
         </div>
@@ -230,8 +228,13 @@ const DoctorDashboard = () => {
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 flex justify-center items-center">
-          <div className="bg-white p-8 w-96 rounded-lg">
+        <div className="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-75 overflow-y-auto">
+          <div className="bg-white p-8 w-96 rounded-lg overflow-y-auto">
+          <div className="flex justify-end">
+            <button onClick={handleModalClose} className="text-gray-600">
+              <i className="fas fa-times"></i>
+            </button>
+          </div>
             <h2 className="text-2xl font-bold mb-4">Update Doctor Information</h2>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">Email:</label>
@@ -239,6 +242,16 @@ const DoctorDashboard = () => {
                 type="text"
                 name="email"
                 value={formData.email}
+                onChange={handleInputChange}
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">Fee:</label>
+              <input
+                type="text"
+                name="gender"
+                value={formData.gender}
                 onChange={handleInputChange}
                 className="w-full p-2 border border-gray-300 rounded"
               />
@@ -279,6 +292,15 @@ const DoctorDashboard = () => {
                 type="text"
                 name="fee"
                 value={formData.fee}
+                onChange={handleInputChange}
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+            </div><div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">Current Working Hospital:</label>
+              <input
+                type="text"
+                name="current_working_hospital"
+                value={formData.current_working_hospital}
                 onChange={handleInputChange}
                 className="w-full p-2 border border-gray-300 rounded"
               />

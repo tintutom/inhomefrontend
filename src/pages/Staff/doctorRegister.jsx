@@ -486,6 +486,7 @@ function DoctorRegister() {
     axios
       .post(hospitalSignup, data, {
         headers: { "Content-Type": "multipart/form-data" },
+        // timeout: 15000,
       })
       .then((response) => {
 

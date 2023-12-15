@@ -88,14 +88,9 @@ function AddSpecialization() {
   return (
     <>
     <div className="container-fluid  mt-5">
-      <div className="row">
+      <div className="row justify-content-center">
         <div className="col-md-6">
-          <Button
-            className="primary d-flex justify-content-start mb-3"
-            onClick={handleShow}
-          >
-            Add Department
-          </Button>
+          
 
           <Table striped bordered hover>
             <thead>
@@ -124,6 +119,12 @@ function AddSpecialization() {
               ))}
             </tbody>
           </Table>
+          <Button
+            className="primary d-flex justify-content-start mb-3"
+            onClick={handleShow}
+          >
+            Add Department
+          </Button>
 
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>

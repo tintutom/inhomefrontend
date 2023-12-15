@@ -30,12 +30,14 @@ const ChatComponent = () => {
   const connectToWebSocket = (appointmentId) => {
     if (!appointmentId) return;
 
-    // const newClient = new W3CWebSocket(`ws://127.0.0.1:8001/ws/chat/${appointmentId}/`);
-    const newClient = new W3CWebSocket(`${baseUrl}ws/chat/${appointmentId}/`);
+    const newClient = new W3CWebSocket(`ws://127.0.0.1:8000/ws/chat/${appointmentId}/`);
+
+    // const newClient = new W3CWebSocket(`ws://tintutom.online/ws/chat/${appointmentId}/`);
     setClient(newClient);
 
     newClient.onopen = () => {
       console.log('WebSocket Client Connected');
+      // fetchExistingMessages(appointmentId);
     };
 
     newClient.onmessage = (message) => {
@@ -43,6 +45,7 @@ const ChatComponent = () => {
       console.log('Received message:', data.message);
       setChatMessages((prevMessages) => [...prevMessages, data.message]);
     };
+   
     // Fetch existing messages when the WebSocket connection is established
     const fetchExistingMessages = async () => {
       try {
@@ -56,14 +59,20 @@ const ChatComponent = () => {
       }
       console.log('Chat messages:', chatMessages);
 
-  };
-
-  fetchExistingMessages();
-
-    return () => {
-      newClient.close();
+    }
+    newClient.onopen = () => {
+      console.log('WebSocket Client Connected');
+      fetchExistingMessages(); // Fetch existing messages when the WebSocket connection is established
     };
+
+  return () => {
+    newClient.close();
   };
+};
+
+ 
+
+    
 
   const handleAppointmentClick = (appointment) => {
     setSelectedAppointment(appointment);
@@ -109,7 +118,7 @@ const ChatComponent = () => {
           {appointments.map((appointment) => (
             <li key={appointment.id} onClick={() => handleAppointmentClick(appointment)}>
                 <div className="doctor-list-item d-flex align-items-start">
-                  <img src={`${mediaUrl}${appointment.doctor.image}`} alt="Doctor" className="rounded-circle mr-1" width={40} height={40} />
+                  <img src={`${appointment.doctor.image}`} alt="Doctor" className="rounded-circle mr-1" width={40} height={40} />
                   <div className="flex-grow-1 ml-3">
                     <div className="small">
                       <small>{appointment.doctor.name}</small>
@@ -125,7 +134,7 @@ const ChatComponent = () => {
             <div>
               <div className="selected-doctor-info d-flex align-items-center">
                 <img
-                  src={`${mediaUrl}${selectedAppointment.doctor.image}`}
+                  src={`${selectedAppointment.doctor.image}`}
                   alt={selectedAppointment.doctor.name}
                   className="rounded-circle mr-1"
                   width={40}

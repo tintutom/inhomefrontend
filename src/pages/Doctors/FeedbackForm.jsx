@@ -149,20 +149,20 @@ const FeedbackForm = () => {
 
             <div>
               {[...Array(5).keys()].map((_, index) => {
-                index += 1;
+                const starValue = index += 1;
 
                 return (
                   <button
                     key={index}
                     type='button'
                     className={`${
-                      index <= (rating && hover) || hover
+                      starValue <= (hover || rating)
                         ? 'text-yellowColor'
                         : 'text-gray-400'
                     } bg-transparent border-none outline-none text-[22px] cursor-pointer`}
-                    onClick={() => setRating(index)}
-                    onMouseEnter={() => setHover(index)}
-                    onMouseLeave={() => setHover(rating)}
+                    onClick={() => setRating(starValue)}
+                    onMouseEnter={() => setHover(starValue)}
+                    onMouseLeave={() => setHover(0)}
                     onDoubleClick={() => {
                       setHover(0);
                       setRating(0);

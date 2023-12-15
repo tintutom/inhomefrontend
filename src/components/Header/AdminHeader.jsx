@@ -1,5 +1,5 @@
 // AdminHeader.jsx
-import logo from '../../assets/images/inhome-consulting-logo11.jpg';
+import logo from '../../assets/images/logo.png';
 import userImg from '../../assets/images/avatar-icon.png';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import React, { useEffect, useRef, useContext, useState } from 'react';
@@ -107,7 +107,7 @@ const AdminHeader = () => {
   };
 
   return (
-    <header className={`header flex items-center ${isHeaderWhite ? 'bg-white shadow-md' : ''}`} ref={headerRef}>
+    <header className={`header flex items-center ${isHeaderWhite ? 'bg-white shadow-md' : ''}`} ref={headerRef} style={{ width: '100%',paddingTop: '20px' }}>
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           <div>

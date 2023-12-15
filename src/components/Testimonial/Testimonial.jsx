@@ -124,7 +124,7 @@ const Testimonial = () => {
             <div className='py-[30px] px-5 rounded-3'>
               <div className='flex items-center gap-[13px]'>
                 <img
-                  src={`${mediaUrl}${feedback.user.userimage}`}
+                  src={`${feedback.user.userimage}`}
                   alt=''
                   style={{ width: '50px', height: '50px', borderRadius: '50%' }}
                 />

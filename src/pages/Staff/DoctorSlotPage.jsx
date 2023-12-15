@@ -36,7 +36,7 @@ const DoctorSlotPage = ({ doctorId }) => {
 
   return (
     <div className="container mx-auto my-8">
-      <h2 className="text-2xl font-bold mb-4">Add Doctor Appointment Slot</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">Add Doctor Appointment Slot</h2>
       <DoctorSlotForm onSubmit={handleSlotSubmit} />
     </div>
   );

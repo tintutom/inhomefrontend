@@ -76,49 +76,61 @@ const AppoinmentView = () => {
     }
   };
   return (
-    <div className="container mx-auto mt-8">
-      <h2 className="text-2xl font-bold mb-4">Your Appointments</h2>
+    <div className="container mx-auto mt-16">
+      <h2 className="text-2xl font-bold mb-4 justify-center">Your Appointments</h2>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300">
-          <thead className="bg-blue-500 text-white">
-            <tr>
-              <th className="py-2">Patient</th>
-              <th className="py-2">Date</th>
-              <th className="py-2">Time</th>
-              <th className="py-2">Distance (km)</th>
-              <th className="py-2">Locate in Map</th>
-            </tr>
-          </thead>
-          <tbody>
-            {appointments.map(appointment => (
-              
-              <tr key={appointment.id}>
-                <td className="py-2">{appointment.user.name}</td>
-                <td className="py-2">{appointment.date}</td>
-                <td className="py-2">{`${appointment.start_time} - ${appointment.end_time}`}</td>
-                <td className="py-2">
-                  {/* Calculate and display the distance */}
-                  {haversineDistance(
-                    appointment.latitude,  
-                    appointment.longitude,
-                    9.9377157,
-                    76.32278183249196
-                  ).toFixed(2)}
-                </td>
-                <td className="py-2">
-                  <button onClick={() => toggleMap(appointment)}>{selectedAppointment && selectedAppointment.id === appointment.id
-                      ? "Close Map"
-                      : "Show Map"}
-                  </button>
-                </td>
+      {appointments.length === 0 ? (
+          <div className="relative h-screen">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <p>No Upcoming Appointments</p>
+          </div>
+        </div>
+        ) : (
+          <table className="min-w-full bg-white border border-gray-300">
+            <thead className="bg-blue-500 text-white">
+              <tr>
+                <th className="py-2">Patient</th>
+                <th className="py-2">Date</th>
+                <th className="py-2">Time</th>
+                <th className="py-2">Distance (km)</th>
+                <th className="py-2">Locate in Map</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {appointments.map(appointment => (
+                
+                <tr key={appointment.id}>
+                  <td className="py-2">{appointment.user.name}</td>
+                  <td className="py-2">{appointment.date}</td>
+                  <td className="py-2">{`${appointment.start_time} - ${appointment.end_time}`}</td>
+                  <td className="py-2">
+                    {/* Calculate and display the distance */}
+                    {haversineDistance(
+                      appointment.latitude,  
+                      appointment.longitude,
+                      9.9377157,
+                      76.32278183249196
+                    ).toFixed(2)}
+                  </td>
+                  <td className="py-2">
+                    <button onClick={() => toggleMap(appointment)}>{selectedAppointment && selectedAppointment.id === appointment.id
+                        ? "Close Map"
+                        : "Show Map"}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
         </div>
         {selectedAppointment && (
         <MapView appointment={selectedAppointment} onClose={()=>toggleMap(selectedAppointment)} />
       )}
+      
+      <div mt-24>
+        <p>     </p>
+      </div>
       </div>
   );
 };

@@ -25,7 +25,7 @@ const Home = () => {
           {/*========hero content===========*/}
           <div>
             <div className='lg:w-[570px]'>
-              <h1 className='text-[360px] leading-[46px] text-headingColor font-[800] md:text-[60px] md:leading-[70px]'>
+              <h1 className='text-[5vw] md:text-[60px] md:leading-[7vw] text-headingColor font-[800]'>
                 We help patients live a healthy, longer life. 
               </h1>
               <p className='text__para'>jthyrtgeghthyrtgefegste grewfgw3 trefgrwr</p>

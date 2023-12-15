@@ -102,7 +102,7 @@ function Doctorlist() {
     {
       name: "Image",
       cell: (row) => {
-        return <img src={`${mediaUrl}${row.image}`} alt={row.name} width="50" />;
+        return <img src={`${row.image}`} alt={row.name} width="50" />;
       },
     },
     {

@@ -18,9 +18,9 @@ const DoctorCard = ({doctor}) => {
     } = doctor; 
 
   return (
-    <div className='p-3 lg:p-3 border border-solid border-[#181A1E] rounded-md '>
+    <div className='p-3 lg:p-3 border border-solid border-[#181A1E] rounded-md-[10px] '>
         <div style={{ position: 'relative', paddingBottom: '100%' }}>
-            <img src={`${mediaUrl}${doctor.image}`} className='absolute w-full h-full object-cover rounded-t-md' alt=''/>
+            <img src={`${doctor.image}`} className='absolute w-full h-full object-cover rounded-t-md' alt=''/>
 
         </div>
         <h2 className='text-[18px] leading-[30px] lg:text-[26px] lg:leading-9 text-headingColor font-[700] mt-3 lg:mt-5'>

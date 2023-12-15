@@ -39,6 +39,7 @@ import SearchUsers from './components/Messages/SearchUsers';
 import AppoinmentView from './pages/Staff/AppoinmentView';
 import ChatComponent from './components/Messages/message';
 import DocChatComponent from './components/Messages/DocMessage';
+import PreAppoinments from './pages/Staff/PreAppoinments';
 
 function App() {
   
@@ -98,6 +99,7 @@ function App() {
             <Route path='hospital/slots' element={<DoctorSlotsListPage />} />
             <Route path='hospital/calender' element={<DoctorCalender />} />
             <Route path='hospital/appoinments' element={<AppoinmentView />} />
+            <Route path='hospital/preappoinments' element={<PreAppoinments />} />
             <Route path='hospital/message' element={<DocChatComponent />} ></Route>
 
             

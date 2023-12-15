@@ -1,7 +1,3 @@
-// import React, { useState } from 'react'
-// import signupImg from '../assets/images/signup.gif';
-// import avatar from '../assets/images/doctor-img01.png';
-// import { Link } from 'react-router-dom';
 
 import React, { useState } from 'react';
 import signupImg from '../assets/images/signup.gif';
@@ -99,8 +95,14 @@ function Signup() {
       setPasswordError("");
     }
   };
-  const handleFileInputChange=(e)=>{
-    setPhoto(e.target.value);
+  // const handleFileInputChange=(e)=>{
+  //   setPhoto(e.target.value);
+  // };
+  const handleFileInputChange = (e) => {
+    const fileInput = e.target;
+    const fileName = fileInput.files[0]?.name || '';
+    setPhoto(fileName);
+    setPreviewURL(URL.createObjectURL(fileInput.files[0])); // Assuming you want to preview the selected image
   };
 
   return (

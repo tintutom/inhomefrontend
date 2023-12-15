@@ -1,7 +1,7 @@
 
 
 import { NavDropdown } from 'react-bootstrap';
-import logo from '../../assets/images/inhome-consulting-logo11.jpg';
+import logo from '../../assets/images/logo.png';
 import userImg from '../../assets/images/avatar-icon.png';
 
 import React, { useEffect, useRef, useContext, useState } from 'react';
@@ -72,6 +72,8 @@ const StaffHeader = () => {
 
   const handleStickyHeader = () => {
     window.addEventListener('scroll', () => {
+      const currentHeaderRef=headerRef.current;
+      if (!currentHeaderRef) return;
       if (
         document.body.scrollTop > 80 ||
         document.documentElement.scrollTop > 80
@@ -81,13 +83,13 @@ const StaffHeader = () => {
     //     headerRef.current.classList.remove('sticky__header');
     //   }
     ) {
-        headerRef.current.style.position = 'fixed';
-        headerRef.current.style.top = '0';
-        headerRef.current.style.width = '100%';
-        headerRef.current.style.zIndex = '1000'; 
+        currentHeaderRef.style.position = 'fixed';
+        currentHeaderRef.style.top = '0';
+        currentHeaderRef.style.width = '100%';
+        currentHeaderRef.style.zIndex = '1000'; 
         setIsHeaderWhite(true);
       } else {
-        headerRef.current.style.position = 'static';
+        currentHeaderRef.style.position = 'static';
         setIsHeaderWhite(false);
       }
     });
@@ -133,12 +135,12 @@ const StaffHeader = () => {
     }
   }, []);
   
-  const toggleProfileDropdown = () => {
-    setShowProfileDropdown(!showProfileDropdown);
-  };
+  // const toggleProfileDropdown = () => {
+  //   setShowProfileDropdown(!showProfileDropdown);
+  // };
 
   return (
-    <header className="header flex items-center" ref={headerRef}>
+    <header className="header flex items-center" ref={headerRef} style={{ width: '100%',paddingTop: '20px' }}>
       <div className="container">
         <div className="flex items-center justify-between">
           <div>
@@ -151,7 +153,7 @@ const StaffHeader = () => {
                     <li key={index}>
                       {link.display === 'Appoinments' ? (
                         <NavDropdown title={link.display} id="appoinments-dropdown">
-                          <NavDropdown.Item as={Link} to="/hospital/upcoming-appointments">
+                          <NavDropdown.Item as={Link} to="/hospital/preappoinments">
                             Previous Appointments
                           </NavDropdown.Item>
                           <NavDropdown.Item as={Link} to="/hospital/appoinments">
@@ -198,9 +200,9 @@ const StaffHeader = () => {
                     className="w-[35px] h-[35px] rounded-full cursor-pointer"
                     alt=""
 
-                    onClick={toggleProfileDropdown}
+                    // onClick={toggleProfileDropdown}
                   />
-                  {showProfileDropdown && (
+                  {/* {showProfileDropdown && (
                   <NavDropdown
                     // title="Profile"
                     // id="profile-dropdown"
@@ -211,7 +213,7 @@ const StaffHeader = () => {
                     <NavDropdown.Item href="/appointment">Appointment</NavDropdown.Item>
                     <NavDropdown.Item href="/hospital/calender">Calender</NavDropdown.Item>
                   </NavDropdown>
-                )}
+                )} */}
               </div>
               {/* <Link to="/">
                 <figure className="w-[35px] h-[35px] rounded-full cursor-pointer">
