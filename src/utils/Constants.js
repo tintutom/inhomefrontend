@@ -1,8 +1,8 @@
 
 
-export const baseUrl = "http://127.0.0.1:8000/";
+// export const baseUrl = "http://127.0.0.1:8000/";
 
-// export const baseUrl = "https://tintutom.online/";
+export const baseUrl = "https://tintutom.online/";
 export const mediaUrl= "https://inhome.s3.amazonaws.com/";
 
 
