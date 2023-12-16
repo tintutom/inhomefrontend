@@ -76,3 +76,11 @@ body{
     display: block;
   }
 }
+.App{
+  /* background-color: red; */
+  /* display: none; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}

@@ -1,4 +1,4 @@
-// UserProfile.jsx
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -21,7 +21,7 @@ const UserProfile = () => {
 
   return (
     <section>
-      <div className='max-w-[1170px] px-5 mx-auto'>
+           <div className='max-w-[1170px] px-5 mx-auto'>
         <div className='grid md:grid-cols-3 gap-[50px]'>
           <div className='md:col-span-2'>
             {userData && (
@@ -53,7 +53,7 @@ const UserProfile = () => {
             <div className='mt-[50px]'>
               {tab === 'about' && (
                 <div>
-                  {/* Display additional about information if needed */}
+                
                 </div>
               )}
               {tab === 'appointments' && (

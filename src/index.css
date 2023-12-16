@@ -62,3 +62,6 @@
     @apply text-[16px] leading-7 mt-3;
   }
 } */
+#root{
+  height: 100vh;
+}

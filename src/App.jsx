@@ -40,7 +40,7 @@ import AppoinmentView from './pages/Staff/AppoinmentView';
 import ChatComponent from './components/Messages/message';
 import DocChatComponent from './components/Messages/DocMessage';
 import PreAppoinments from './pages/Staff/PreAppoinments';
-
+import "./App.css";
 function App() {
   
   const path = window.location.pathname; // Get the current path
@@ -50,6 +50,9 @@ function App() {
       <div className='App'>
       <Router>
       {isHospitalPath ? <StaffHeader /> : isAdminPath ? <AdminHeader /> : <Header />}
+        
+
+
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/home' element={<Home />} />
@@ -106,6 +109,7 @@ function App() {
           </Route>  
 
         </Routes>
+         
         
 
         
