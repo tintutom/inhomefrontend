@@ -50,7 +50,7 @@ function SearchUsers() {
 
 
   const SearchUser = () => {
-    axios.get(`http://localhost:8000/chat/search/${newSearch.username}/`  )
+    axios.get(`${baseUrl}chat/search/${newSearch.username}/`  )
       .then((res) => {
         navigate('/search/'+newSearch.username+'/');
         setUser(res.data)

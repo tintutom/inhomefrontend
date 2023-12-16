@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { baseUrl } from '../../utils/Constants';
 
 const DoctorAdditionalDetailsForm = () => {
   const [experience, setExperience] = useState('');
@@ -10,17 +11,15 @@ const DoctorAdditionalDetailsForm = () => {
   const [currentWorkingHospital, setCurrentWorkingHospital] = useState('');
   const [fee, setFee] = useState('');
   const [gender, setGender] = useState('');
-  const [doctorId, setDoctorId] = useState(''); // State to hold doctorId
+  const [doctorId, setDoctorId] = useState(''); 
   const [availableTimes, setAvailableTimes] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch doctorId from the cookie when the component mounts
     const cookieDoctorId = Cookies.get('hospital_id');
     setDoctorId(cookieDoctorId);
     console.log('doccc id:', cookieDoctorId);
-    console.log("URL:", `http://localhost:8000/doctors/${doctorId}/additional-details`);
-  }, []); // Empty dependency array means this effect runs once when the component mounts
+  }, []); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +29,7 @@ const DoctorAdditionalDetailsForm = () => {
         console.error('Doctor ID is not available.');
         return;
       }
-      await axios.post(`http://localhost:8000/doctors/${doctorId}/additional-details`, {
+      await axios.post(`${baseUrl}doctors/${doctorId}/additional-details`, {
         experience,
         education,
         current_working_hospital: currentWorkingHospital,
@@ -38,11 +37,9 @@ const DoctorAdditionalDetailsForm = () => {
         gender,
       });
       console.log('Doctor additional details added successfully');
-      // Redirect or perform other actions after success
-      navigate('/hospital/panel'); // Example: Redirect to hospital panel
+      navigate('/hospital/panel'); 
     } catch (error) {
       console.error('Error adding additional details:', error.response.data);
-      // Handle error, e.g., show an error message
     }
   };
 

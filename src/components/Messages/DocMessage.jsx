@@ -40,14 +40,17 @@ const DocChatComponent = () => {
 
     newClient.onmessage = (message) => {
       const data = JSON.parse(message.data);
-      setChatMessages((prevMessages) => [...prevMessages, data.message]);
+      setChatMessages((prevMessages) => [...prevMessages, data]);
     };
     const fetchExistingMessages = async () => {
       try {
           const response = await fetch(`${baseUrl}chat/${appointmentId}/`);
           const data = await response.json();
           console.log("dataaaaaaaaa",data)
-          const messagesTextArray = data.map(item => item.message);
+          const messagesTextArray = data.map(item => ({
+            message : item.message,
+            sendername : item.sendername,
+          }));
           setChatMessages(messagesTextArray);
       } catch (error) {
           console.error('Error fetching existing messages:', error);
@@ -69,8 +72,8 @@ const DocChatComponent = () => {
   };
 
   const sendMessage = () => {
-    if (message.trim() === '' || !client) return;
-
+    if (message.trim() === '' || !client || !selectedAppointment) return;
+    const sendername = "John Doe";
     client.send(JSON.stringify({ message }));
     setMessage('');
   };

@@ -1,95 +1,8 @@
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
-// import Cookies from 'js-cookie';
-
-// const DoctorDashboard = () => {
-//   const [doctorInfo, setDoctorInfo] = useState(null);
-//   const [doctorId, setDoctorId] = useState('');
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     const cookieDoctorId = Cookies.get('hospital_id');
-//     setDoctorId(cookieDoctorId);
-    
-//     // Fetch doctor information based on the doctorId
-//     axios.get(`http://localhost:8000/doctors/doctor-info/${doctorId}`)
-//       .then(response => {
-//         setDoctorInfo(response.data);
-//       })
-//       .catch(error => {
-//         console.error('Error fetching doctor information:', error);
-//       });
-//   }, [doctorId]);
-
-//   const handleAddAdditionalDetails = () => {
-//     navigate("add-info");
-//   };
-
-//   if (!doctorInfo) {
-//     // Display loading or handle the absence of data
-//     return <div>Loading...</div>;
-//   }
-
-//   return (
-//     <div className="container mx-auto p-8">
-//       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-//         <div className="flex justify-center items-center bg-blue-500 h-32">
-//           <img
-//             src={`http://localhost:8000${doctorInfo.image}`}
-//             alt="Doctor"
-//             className="object-cover h-24 w-24 rounded-full"
-//           />
-//         </div>
-//         <div className="px-6 py-4 text-center">
-//           <p className="text-gray-700 text-lg mb-2">{doctorInfo.name}</p>
-//           <div className="font-bold text-3xl mb-2">{doctorInfo.specialization.specialization}</div>
-//           <p className="text-gray-700 text-lg">{doctorInfo.description}</p>
-//         </div>
-        
-//         <div className="flex mt-8 space-x-4">
-//           <div className="flex-1 bg-blue-100 shadow-lg rounded-lg overflow-hidden border border-gray-300">
-//             <div className="px-6 py-4">
-//               <div className="font-bold text-xl mb-2 border-b border-gray-300 pb-2">Personal Info</div>
-//               <p className="text-gray-700 text-base"><strong>Email:</strong> {doctorInfo.email}</p>
-//               <p className="text-gray-700 text-base"><strong>Phone:</strong> {doctorInfo.phone}</p>
-//               <p className="text-gray-700 text-base"><strong>Gender:</strong> {doctorInfo.additional_details.gender}</p>
-//             </div>
-//           </div>
-
-//           <div className="flex-1 bg-blue-200 shadow-lg rounded-lg overflow-hidden border border-gray-300">
-//             <div className="px-6 py-4">
-//               <div className="font-bold text-xl mb-2 border-b border-gray-300 pb-2">Professional Info</div>
-//               <p className="text-gray-700 text-base"><strong>Experience:</strong> {doctorInfo.additional_details.experience} years</p>
-//               <p className="text-gray-700 text-base"><strong>Education:</strong> {doctorInfo.additional_details.education}</p>
-//               <p className="text-gray-700 text-base"><strong>Current Working Hospital:</strong> {doctorInfo.additional_details.current_working_hospital}</p>
-//               <p className="text-gray-700 text-base"><strong>Consulting Fee:</strong> {doctorInfo.additional_details.fee}</p>
-//             </div>
-//           </div>
-//         </div>
-
-//         {!doctorInfo.additional_details && (
-//           <div className="mt-8">
-//             <button
-//               onClick={handleAddAdditionalDetails}
-//               className="bg-blue-500 text-white py-2 px-4 rounded"
-//             >
-//               Add Additional Data
-//             </button>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default DoctorDashboard;
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import {baseUrl,mediaUrl} from '../../utils/Constants'
+import {baseUrl} from '../../utils/Constants'
 const DoctorDashboard = () => {
   const [doctorInfo, setDoctorInfo] = useState(null);
   const [doctorId, setDoctorId] = useState('');
@@ -97,12 +10,13 @@ const DoctorDashboard = () => {
   const [formData, setFormData] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
+  const [isAdditionalDetailsFormOpen, setIsAdditionalDetailsFormOpen] = useState(false);
+
 
   useEffect(() => {
     const cookieDoctorId = Cookies.get('hospital_id');
     setDoctorId(cookieDoctorId);
-
-    // Fetch doctor information based on the doctorId
+    
     axios.get(`${baseUrl}doctors/doctor-info/${doctorId}`)
       .then(response => {
         setDoctorInfo(response.data);
@@ -111,18 +25,21 @@ const DoctorDashboard = () => {
         console.error('Error fetching doctor information:', error);
       });
   }, [doctorId]);
-
   const handleAddAdditionalDetails = () => {
+    setIsAdditionalDetailsFormOpen(true);
+
     setIsModalOpen(true);
+    const { additional_details } = doctorInfo;
+
     setFormData({
       email: doctorInfo.email,
       phone: doctorInfo.phone,
       description: doctorInfo.description,
-      gender: doctorInfo.additional_details?.gender || '',
-      experience: doctorInfo.additional_details?.experience || '',
-      education: doctorInfo.additional_details?.education || '',
-      current_working_hospital: doctorInfo.additional_details?.current_working_hospital || '',
-      fee: doctorInfo.additional_details?.fee || '',
+      gender: additional_details?.gender || '',
+      experience: additional_details?.experience || '',
+      education: additional_details?.education || '',
+      current_working_hospital: additional_details?.current_working_hospital || '',
+      fee: additional_details?.fee || '',
        
     });
   };
@@ -139,9 +56,18 @@ const DoctorDashboard = () => {
       [name]: value,
     });
   };
-
   const handleFormSubmit = () => {
-    axios.put(`${baseUrl}doctors/update/${doctorId}/`, formData)
+    const requestData = {
+      ...formData,
+      additional_details: {
+        gender: formData.gender,
+        experience: formData.experience,
+        education: formData.education,
+        current_working_hospital: formData.current_working_hospital,
+        fee: formData.fee,
+      },
+    };
+    axios.put(`${baseUrl}doctors/update/${doctorId}/`, requestData)
       .then(response => {
         setDoctorInfo(response.data);
         setIsModalOpen(false);
@@ -151,15 +77,18 @@ const DoctorDashboard = () => {
         console.error('Error updating doctor information:', error);
       });
   };
-  // Use effect to clear the success message after 2 seconds
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setSuccessMessage('');
     }, 2000);
 
-    // Cleanup the timeout to prevent memory leaks
     return () => clearTimeout(timeoutId);
   }, [successMessage]);
+
+
+  const handleAddAdditional = () => {
+    navigate("/hospital/panel/add-info");
+  };
 
   if (!doctorInfo) {
     return <div>Loading...</div>;
@@ -175,7 +104,7 @@ const DoctorDashboard = () => {
         
       )}
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-        <div className="flex justify-center items-center bg-blue-500 h-32">
+      <div className="flex justify-center items-center bg-blue-500 h-32">
           <img
             src={`${doctorInfo.image}`}
             alt="Doctor"
@@ -193,32 +122,32 @@ const DoctorDashboard = () => {
           <div className="font-bold text-3xl mb-2">{doctorInfo.specialization.specialization}</div>
           <p className="text-gray-700 text-lg">{doctorInfo.description}</p>
         </div>
-
+        
         <div className="flex mt-8 space-x-4">
           <div className="flex-1 bg-blue-100 shadow-lg rounded-lg overflow-hidden border border-gray-300">
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2 border-b border-gray-300 pb-2">Personal Info</div>
               <p className="text-gray-700 text-base"><strong>Email:</strong> {doctorInfo.email}</p>
               <p className="text-gray-700 text-base"><strong>Phone:</strong> {doctorInfo.phone}</p>
-              <p className="text-gray-700 text-base"><strong>Gender:</strong> {doctorInfo.additional_details?.gender || 'N/A'}</p>
+              <p className="text-gray-700 text-base"><strong>Gender:</strong> {doctorInfo.additional_details?.gender}</p>
             </div>
           </div>
 
           <div className="flex-1 bg-blue-200 shadow-lg rounded-lg overflow-hidden border border-gray-300">
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2 border-b border-gray-300 pb-2">Professional Info</div>
-              <p className="text-gray-700 text-base"><strong>Experience:</strong> {doctorInfo.additional_details?.experience || 'N/A'} years</p>
-              <p className="text-gray-700 text-base"><strong>Education:</strong> {doctorInfo.additional_details?.education || 'N/A'}</p>
-              <p className="text-gray-700 text-base"><strong>Current Working Hospital:</strong> {doctorInfo.additional_details?.current_working_hospital || 'N/A'}</p>
-              <p className="text-gray-700 text-base"><strong>Consulting Fee:</strong> {doctorInfo.additional_details?.fee || 'N/A'}</p>
+              <p className="text-gray-700 text-base"><strong>Experience:</strong> {doctorInfo.additional_details?.experience} years</p>
+              <p className="text-gray-700 text-base"><strong>Education:</strong> {doctorInfo.additional_details?.education}</p>
+              <p className="text-gray-700 text-base"><strong>Current Working Hospital:</strong> {doctorInfo.additional_details?.current_working_hospital}</p>
+              <p className="text-gray-700 text-base"><strong>Consulting Fee:</strong> {doctorInfo.additional_details?.fee}</p>
             </div>
           </div>
         </div>
 
         {!doctorInfo.additional_details && (
-          <div className="mt-8">
+          <div className="flex items-center mt-8 justify-center ">
             <button
-              onClick={handleAddAdditionalDetails}
+              onClick={handleAddAdditional}
               className="bg-blue-500 text-white py-2 px-4 rounded"
             >
               Add Additional Data
@@ -226,7 +155,6 @@ const DoctorDashboard = () => {
           </div>
         )}
       </div>
-
       {isModalOpen && (
         <div className="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-75 overflow-y-auto">
           <div className="bg-white p-8 w-96 rounded-lg overflow-y-auto">

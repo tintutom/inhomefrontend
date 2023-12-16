@@ -6,6 +6,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Cookies from 'js-cookie';
+import { baseUrl } from "../../utils/Constants";
 
  const DoctorCalender=()=> {
     const [showComponent, setShowComponent] = useState(true);
@@ -44,7 +45,7 @@ import Cookies from 'js-cookie';
     //Functiion to fetch availability
     const fetchAvailability = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/doctors/${userId}/view_slots`);
+        const response = await axios.get(`${baseUrl}doctors/${userId}/view_slots`);
         // Handle the fetched slots data as needed
         console.log(response.data,'availabilityyyyyyyyyyyyy');
         setEvents(response.data)

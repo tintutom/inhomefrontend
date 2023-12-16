@@ -179,6 +179,31 @@ function AdminDashboard() {
       });
   }, []);
 
+  const doctorRatingsData = doctorReviews.reduce((accumulator, review) => {
+    const doctorName = review.doctor.name;
+
+    // Check if the doctorName exists in the accumulator
+    if (accumulator[doctorName]) {
+      // If yes, update the totalRating and count
+      accumulator[doctorName].totalRating += review.rating;
+      accumulator[doctorName].count += 1;
+    } else {
+      // If no, initialize the entry with the current rating
+      accumulator[doctorName] = {
+        totalRating: review.rating,
+        count: 1,
+      };
+    }
+
+    return accumulator;
+  }, {});
+
+  // Calculate the average rating for each doctor
+  const doctorAverages = Object.entries(doctorRatingsData).map(([doctorName, data]) => ({
+    doctorName,
+    averageRating: data.totalRating / data.count,
+  }));
+
 
   return (
     <main className="amain-container">
@@ -209,8 +234,10 @@ function AdminDashboard() {
           <p>0</p>
         </div> */}
       </div>
-
+      <h2>Doctor Appoinment & Review Graph</h2>
+      <h3>  </h3>
       <div className="acharts">
+      
         <div className="achart-container">
           <ResponsiveContainer width="100%" height={300}>
             <BarChart
@@ -230,7 +257,7 @@ function AdminDashboard() {
         <div className="achart-container">
           <ResponsiveContainer width="100%" height={300}>
             <LineChart
-              data={doctorAppointmentsData}
+              data={doctorAverages}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
@@ -238,14 +265,14 @@ function AdminDashboard() {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="appointmentCount" stroke="#8884d8" activeDot={{ r: 8 }} />
+              <Line type="monotone" dataKey="averageRating" stroke="#8884d8" activeDot={{ r: 8 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       <div className="areviews-container">
-        <h2>Doctor Reviews</h2>
+        <h2 >Doctor Reviews</h2>
         <ul className="areviews-list">
           {doctorReviews.map((review, index) => (
             <li key={index} className="adoctor-review">

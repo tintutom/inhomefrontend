@@ -53,10 +53,19 @@ function Signup() {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
+        console.log("Response from backend:", response.data);
         toast.error(response.data.status, {
           autoClose: 40000,
         });
-        navigate("/login");
+        if (response.data.status === "Success") {
+          navigate("/login");
+        }
+      })
+      .catch((error) => {
+        console.error("Error in Axios request:", error);
+        toast.error("Error in form submission. Please try again.", {
+          autoClose: 20000,
+        });
       });
   };
 
@@ -100,9 +109,10 @@ function Signup() {
   // };
   const handleFileInputChange = (e) => {
     const fileInput = e.target;
-    const fileName = fileInput.files[0]?.name || '';
-    setPhoto(fileName);
-    setPreviewURL(URL.createObjectURL(fileInput.files[0])); // Assuming you want to preview the selected image
+    const selectedFile = fileInput.files[0];
+    const fileName = selectedFile?.name || '';
+    setPhoto(selectedFile);
+    setPreviewURL(URL.createObjectURL(selectedFile)); // Assuming you want to preview the selected image
   };
 
   return (
@@ -136,7 +146,7 @@ function Signup() {
               <div className='mb-5'>
                 <input
                   type='text'
-                  placeholder='Enter Your Email'
+                  placeholder='Enter Your Emaillllllllll'
                   name='email'
                   value={email}
                   onChange={handleEmailChange}

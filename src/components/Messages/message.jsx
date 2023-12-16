@@ -37,13 +37,14 @@ const ChatComponent = () => {
 
     newClient.onopen = () => {
       console.log('WebSocket Client Connected');
+      fetchExistingMessages();
       // fetchExistingMessages(appointmentId);
     };
 
     newClient.onmessage = (message) => {
       const data = JSON.parse(message.data);
-      console.log('Received message:', data.message);
-      setChatMessages((prevMessages) => [...prevMessages, data.message]);
+      console.log('Received message:', message.data);
+      setChatMessages((prevMessages) => [...prevMessages, data]);
     };
    
     // Fetch existing messages when the WebSocket connection is established
@@ -52,8 +53,12 @@ const ChatComponent = () => {
           const response = await fetch(`${baseUrl}chat/${appointmentId}/`);
           const data = await response.json();
           console.log("dataaaaaaaaa",data)
-          const messagesTextArray = data.map(item => item.message);
+          const messagesTextArray = data.map(item => ({
+            message : item.message,
+            sendername : item.sendername,
+          }));
           setChatMessages(messagesTextArray);
+          
       } catch (error) {
           console.error('Error fetching existing messages:', error);
       }
@@ -79,11 +84,16 @@ const ChatComponent = () => {
     setChatMessages([]);
     connectToWebSocket(appointment.id);
   };
+  const isCurrentUser = selectedAppointment && selectedAppointment.user.id === userId;
+
 
   const sendMessage = () => {
-    if (message.trim() === '' || !client) return;
+    if (message.trim() === '' || !client || !selectedAppointment) return;
 
-    client.send(JSON.stringify({ message }));
+    const sendername = "John Doe";
+
+    client.send(JSON.stringify({ message, sendername }));
+    console.log({message})
     setMessage('');
   };
 
@@ -148,7 +158,7 @@ const ChatComponent = () => {
               <div className="chat-messages">
                 {chatMessages.map((msg, index) => (
                   <div key={index} className="message">
-                    {msg}
+                        <strong>{msg.sendername}:</strong> {msg.message}
                   </div>
                 ))}
               </div>

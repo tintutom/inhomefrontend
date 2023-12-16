@@ -4,7 +4,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { mediaUrl, baseUrl } from '../utils/Constants';
 import UserAppointments from './Appoinment';  // Import UserAppointments component
-
+import avatarIcon from '../assets/images/wg3.jpg'
 const UserProfile = () => {
   const [userData, setUserData] = useState(null);
   const [tab, setTab] = useState('about');
@@ -27,7 +27,7 @@ const UserProfile = () => {
             {userData && (
               <div className="flex items-center gap-5">
                 <figure className="max-w-[200px] max-h-[200px]">
-                  <img src={userData.userimage} alt="" className="w-full rounded-full" />
+                  <img src={userData.userimage || avatarIcon} alt="" className="w-full rounded-full" />
                 </figure>
                 <div>
                   <p className="text-xl font-semibold">{userData.name}</p>
