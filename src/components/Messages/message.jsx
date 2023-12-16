@@ -120,7 +120,7 @@ const ChatComponent = () => {
                     
       <div className="chat-container">
         <div className="appointments-list">
-          <h2>Upcoming Appointments</h2>
+          <h2>Connect With Doctors</h2>
           <ul>
           {appointments.map((appointment) => (
             <li key={appointment.id} onClick={() => handleAppointmentClick(appointment)}>
@@ -152,7 +152,7 @@ const ChatComponent = () => {
                 
                 </div>
               </div>
-              <div className="chat-messages">
+              <div className="chat-messages mt-4">
                 {chatMessages.map((msg, index) => (
                   <div key={index} className="message">
                         <strong>{msg.sendername}:</strong> {msg.message}
