@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import Cookies from 'js-cookie';
@@ -37,7 +38,7 @@ const ChatComponent = () => {
 
     newClient.onopen = () => {
       console.log('WebSocket Client Connected');
-      fetchExistingMessages();
+      // fetchExistingMessages();
       // fetchExistingMessages(appointmentId);
     };
 
@@ -63,40 +64,35 @@ const ChatComponent = () => {
           console.error('Error fetching existing messages:', error);
       }
       console.log('Chat messages:', chatMessages);
-
-    }
-    // newClient.onopen = () => {
-    //   console.log('WebSocket Client Connected');
-    //   fetchExistingMessages(); // Fetch existing messages when the WebSocket connection is established
     };
     fetchExistingMessages();
 
-    return () => {
-      newClient.close();
+      return () => {
+        newClient.close();
+      };
     };
-  };
 
  
 
     
 
-  const handleAppointmentClick = (appointment) => {
-    setSelectedAppointment(appointment);
-    setChatMessages([]);
-    connectToWebSocket(appointment.id);
-  };
-  const isCurrentUser = selectedAppointment && selectedAppointment.user.id === userId;
+    const handleAppointmentClick = (appointment) => {
+      setSelectedAppointment(appointment);
+      setChatMessages([]);
+      connectToWebSocket(appointment.id);
+    };
+    const isCurrentUser = selectedAppointment && selectedAppointment.user.id === userId;
+  
 
-
-  const sendMessage = () => {
-    if (message.trim() === '' || !client || !selectedAppointment) return;
-
-    const sendername = "John Doe";
-
-    client.send(JSON.stringify({ message, sendername }));
-    console.log({message})
-    setMessage('');
-  };
+    const sendMessage = () => {
+      if (message.trim() === '' || !client || !selectedAppointment) return;
+  
+      const sendername = "John Doe";
+  
+      client.send(JSON.stringify({ message, sendername }));
+      console.log({message})
+      setMessage('');
+    };
 
   return (
     <div>
