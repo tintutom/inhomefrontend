@@ -65,15 +65,16 @@ const ChatComponent = () => {
       console.log('Chat messages:', chatMessages);
 
     }
-    newClient.onopen = () => {
-      console.log('WebSocket Client Connected');
-      fetchExistingMessages(); // Fetch existing messages when the WebSocket connection is established
+    // newClient.onopen = () => {
+    //   console.log('WebSocket Client Connected');
+    //   fetchExistingMessages(); // Fetch existing messages when the WebSocket connection is established
     };
+    fetchExistingMessages();
 
-  return () => {
-    newClient.close();
+    return () => {
+      newClient.close();
+    };
   };
-};
 
  
 
