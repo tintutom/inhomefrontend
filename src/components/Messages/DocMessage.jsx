@@ -139,7 +139,7 @@ const DocChatComponent = () => {
               <div className="chat-messages">
                 {chatMessages.map((msg, index) => (
                   <div key={index} className="message">
-                    {msg}
+                    <strong>{msg.sendername}:</strong> {msg.message}
                   </div>
                 ))}
               </div>

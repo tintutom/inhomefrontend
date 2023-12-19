@@ -46,10 +46,7 @@ import { baseUrl } from "../../utils/Constants";
     const fetchAvailability = async () => {
       try {
         const response = await axios.get(`${baseUrl}doctors/${userId}/view_slots`);
-        // Handle the fetched slots data as needed
-        console.log(response.data,'availabilityyyyyyyyyyyyy');
         setEvents(response.data)
-        console.log(events,"okayyyyyyyyyyy");
         
       } catch (error) {
         console.log(error);

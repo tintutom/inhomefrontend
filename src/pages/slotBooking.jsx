@@ -1,175 +1,3 @@
-
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { useParams } from 'react-router-dom';
-// import Cookies from 'js-cookie';
-// import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
-// import moment from 'moment';
-
-// const DoctorAppointmentPage = () => {
-//   const { id } = useParams();
-//   const [allSlots, setAllSlots] = useState([]);
-//   const [selectedSlot, setSelectedSlot] = useState(null);
-//   const [bookedSlots, setBookedSlots] = useState([]);
-//   const [selectedDate, setSelectedDate] = useState(null); // Add state for selected date
-//   const userId = Cookies.get('id');
-
-//   useEffect(() => {
-//     const fetchSlots = async () => {
-//       try {
-//         const allSlotsResponse = await axios.get(`http://127.0.0.1:8000/all_slots/${id}`);
-//         const bookedResponse = await axios.get(`http://127.0.0.1:8000/booked_slots/${id}`);
-        
-//         setAllSlots(allSlotsResponse.data);
-//         console.log("sssss",allSlotsResponse.data)
-//         setBookedSlots(bookedResponse.data.map(slot => slot.id));
-//       } catch (error) {
-//         console.error('Error fetching slots:', error);
-//       }
-//     };
-
-//     fetchSlots();
-//   }, [id]);
-
-//   const handleSlotSelection = (slot) => {
-//     // Check if the slot is available before updating the state
-//     if (!bookedSlots.includes(slot.id)) {
-//       setSelectedSlot(slot);
-//     }
-//   };
-
-//   const handleBooking = async () => {
-//     // Check if the selected slot is not already booked
-//     if (!bookedSlots.includes(selectedSlot.id)) {
-//       try {
-//         const response = await axios.post(`http://127.0.0.1:8000/book-appointment/${id}/${selectedSlot.id}`, {
-//           doctor_slot: selectedSlot.id,
-//           user: userId
-//         });
-
-//         setBookedSlots([...bookedSlots, selectedSlot.id]);
-//         alert(`Slot booked: ${selectedSlot.start_time} - ${selectedSlot.end_time} (ID: ${selectedSlot.id})`);
-//         setSelectedSlot(null);
-//       } catch (error) {
-//         console.error('Error booking appointment:', error);
-//         alert('Error booking appointment. Please try again.');
-//       }
-//     } else {
-//       alert('Slot already booked. Please choose another slot.');
-//     }
-//   };
-
-//   useEffect(() => {
-//     const fetchSlots = async () => {
-//       try {
-//         // Use moment library to format the date in 'YYYY-MM-DD' format
-//         const formattedDate = moment(selectedDate).format('YYYY-MM-DD');
-        
-//         const response = await axios.get(`http://127.0.0.1:8000/available_slots/${id}/${formattedDate}`);
-        
-//         // Separate available slots and booked slots
-//         const availableSlots = response.data.filter(slot => !slot.isBooked);
-//         const bookedSlots = response.data.filter(slot => slot.isBooked).map(slot => slot.id);
-  
-//         setAllSlots(availableSlots);
-//         setBookedSlots(bookedSlots);
-//       } catch (error) {
-//         console.error('Error fetching slots:', error);
-//       }
-//     };
-  
-//     if (selectedDate) {
-//       fetchSlots();
-//     }
-//   }, [id, selectedDate]);
-  
-  
-
-//   const handleDateChange = (date) => {
-//     setSelectedDate(date);
-//     // Add logic to fetch slots for the selected date if needed
-//   };
-
-//   return (
-//     <div className="container mx-auto p-8">
-//       <h2 className="text-3xl font-bold mb-8">Doctor Appointment Slot Booking</h2>
-
-//       {/* Date Picker */}
-//       <div className="p-6">
-//         <div className="flex">
-//           <div className="mr-4">
-//             <label className="block font-bold mb-2">Select Date:</label>
-//             <DatePicker
-//               selected={selectedDate}
-//               onChange={handleDateChange}
-//               minDate={new Date()} // Set minimum date to the current date
-//               dateFormat="yyyy-MM-dd" // Set the date format if needed
-//             />
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="flex flex-wrap -mx-4">
-//         {allSlots.map((slot, index) => (
-//           // Adjust the code for displaying slots based on the selected date
-//           <div key={index} className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-4">
-//             <div
-//               className={`bg-white p-6 border rounded cursor-pointer ${
-//                 bookedSlots.includes(slot.id)
-//                   ? 'bg-red-200'
-//                   : selectedSlot === slot
-//                   ? 'border-primaryColor'
-//                   : 'border-gray-300'
-//               }`}
-//               onClick={() => handleSlotSelection(slot)}
-//             >
-//               <div className="text-lg font-semibold mb-2">{`${slot.start_time} - ${slot.end_time} (ID: ${slot.id})`}</div>
-//               <div className="text-sm">
-//                 {slot.is_available ? 'Available' : 'Booked'}
-//               </div>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-
-//       <div className="mt-8">
-//         {selectedSlot && (
-//           <div>
-//             <h3 className="text-xl font-bold mb-4">Selected Slot:</h3>
-//             <div className="bg-white p-6 border rounded border-primaryColor">
-//               <div className="text-lg font-semibold mb-2">
-//                 {`${selectedSlot.start_time} - ${selectedSlot.end_time} (ID: ${selectedSlot.id})`}
-//               </div>
-//               <div className="text-sm">
-//                 {bookedSlots.includes(selectedSlot.id) ? 'Booked' : 'Available'}
-//               </div>
-//             </div>
-//             <button
-//               className={`mt-4 bg-primaryColor text-white px-4 py-2 rounded hover:bg-primaryColorDark ${
-//                 bookedSlots.includes(selectedSlot.id)
-//                   ? 'cursor-not-allowed opacity-50'
-//                   : ''
-//               }`}
-//               onClick={handleBooking}
-//               disabled={bookedSlots.includes(selectedSlot.id)}
-//             >
-//               {bookedSlots.includes(selectedSlot.id)
-//                 ? 'Slot Booked'
-//                 : 'Book Appointment'}
-//             </button>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default DoctorAppointmentPage;
-
-
-
-
 import React, { useState, useEffect } from 'react';
 import { mediaUrl,baseUrl } from '../utils/Constants';
 import { useLocation, useParams } from 'react-router-dom';
@@ -182,11 +10,11 @@ import Map from '../components/Location/AddLocation';
 const SlotBooking=()=>{
   const location = useLocation();
   
-  const [doctor, setDoctor] = useState([]); // for displaying the professional details
-  const [users, setUsers] = useState([]); // for displaying the user details
-  const [availability,setAvailability]=useState([]) //store available date from backend
-  const [selectedDate, setSelectedDate] = useState(''); // store selected date 
-  const [availableTimeSlots, setAvailableTimeSlots] = useState([]); //for manage time slotes
+  const [doctor, setDoctor] = useState([]); 
+  const [users, setUsers] = useState([]); 
+  const [availability,setAvailability]=useState([]) 
+  const [selectedDate, setSelectedDate] = useState('');
+  const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
   const [selectedSlotId, setSelectedSlotId] = useState(null);
   const navigate = useNavigate();
@@ -385,15 +213,9 @@ const SlotBooking=()=>{
               </div>
             )}
           </div>
-          
-
-        
-      </div>
-      
-      
+                  
+      </div>         
     </div>
-
-
       <div className="p-6 flex justify-end">
         <button className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-md mr-4 "   
         onClick={handleSubmit}

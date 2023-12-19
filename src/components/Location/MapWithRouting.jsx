@@ -1,4 +1,3 @@
-// Map.jsx
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';

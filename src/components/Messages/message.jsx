@@ -26,66 +26,48 @@ const ChatComponent = () => {
 
     fetchUpcomingAppointments();
   }, [userId]);
-
-  const connectToWebSocket = (appointmentId) => {
+  const connectToWebSocket = async (appointmentId) => {
     if (!appointmentId) return;
 
-    const newClient = new W3CWebSocket(`ws://127.0.0.1:8001/ws/chat/${appointmentId}/`);
+    try {
+      // Fetch existing messages
+      const response = await fetch(`${baseUrl}chat/${appointmentId}/`);
+      const data = await response.json();
+      const messagesTextArray = data.map((item) => ({
+        message: item.message,
+        sendername: item.sendername,
+      }));
+      setChatMessages(messagesTextArray);
 
-    // const newClient = new W3CWebSocket(`ws://tintutom.online/ws/chat/${appointmentId}/`);
-    setClient(newClient);
+      // Establish WebSocket connection
+      const newClient = new W3CWebSocket(`ws://127.0.0.1:8001/ws/chat/${appointmentId}/`);
+      // const newClient = new W3CWebSocket(`ws://tintutom.online/ws/chat/${appointmentId}/`);
+      setClient(newClient);
 
-    newClient.onopen = () => {
-      console.log('WebSocket Client Connected');
-      fetchExistingMessages();
-      // fetchExistingMessages(appointmentId);
-    };
+      newClient.onopen = () => {
+        console.log('WebSocket Client Connected');
+        // You may choose to fetch existing messages again when the socket is connected
+      };
 
-    newClient.onmessage = (message) => {
-      const data = JSON.parse(message.data);
-      console.log('Received message:', message.data);
-      setChatMessages((prevMessages) => [...prevMessages, data]);
-    };
-   
-    // Fetch existing messages when the WebSocket connection is established
-    const fetchExistingMessages = async () => {
-      try {
-          const response = await fetch(`${baseUrl}chat/${appointmentId}/`);
-          const data = await response.json();
-          console.log("dataaaaaaaaa",data)
-          const messagesTextArray = data.map(item => ({
-            message : item.message,
-            sendername : item.sendername,
-          }));
-          setChatMessages(messagesTextArray);
-          
-      } catch (error) {
-          console.error('Error fetching existing messages:', error);
-      }
-      console.log('Chat messages:', chatMessages);
+      newClient.onmessage = (message) => {
+        const data = JSON.parse(message.data);
+        console.log('Received message:', message.data);
+        setChatMessages((prevMessages) => [...prevMessages, data]);
+      };
 
+      return () => {
+        newClient.close();
+      };
+    } catch (error) {
+      console.error('Error fetching or connecting:', error);
     }
-    newClient.onopen = () => {
-      console.log('WebSocket Client Connected');
-      fetchExistingMessages(); // Fetch existing messages when the WebSocket connection is established
-    };
-
-  return () => {
-    newClient.close();
   };
-};
-
- 
-
-    
 
   const handleAppointmentClick = (appointment) => {
     setSelectedAppointment(appointment);
     setChatMessages([]);
     connectToWebSocket(appointment.id);
   };
-  const isCurrentUser = selectedAppointment && selectedAppointment.user.id === userId;
-
 
   const sendMessage = () => {
     if (message.trim() === '' || !client || !selectedAppointment) return;
@@ -93,9 +75,11 @@ const ChatComponent = () => {
     const sendername = "John Doe";
 
     client.send(JSON.stringify({ message, sendername }));
-    console.log({message})
+    console.log({ message });
     setMessage('');
   };
+
+  
 
   return (
     <div>
@@ -155,7 +139,7 @@ const ChatComponent = () => {
                 
                 </div>
               </div>
-              <div className="chat-messages">
+              <div className="chat-messages mt-4">
                 {chatMessages.map((msg, index) => (
                   <div key={index} className="message">
                         <strong>{msg.sendername}:</strong> {msg.message}

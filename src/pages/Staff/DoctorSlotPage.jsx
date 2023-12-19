@@ -9,7 +9,7 @@ const DoctorSlotPage = ({ doctorId }) => {
     const handleSlotSubmit = async (formData) => {
         try {
           const token = Cookies.get('hospital_id'); 
-          const {doctorId} = Cookies.get('hospital_id'); // Replace with your actual cookie retrieval logic
+          const {doctorId} = Cookies.get('hospital_id'); 
           console.log("tokennnn",token)
           console.log("id",{doctorId})
           console.log("hiiiiii")
@@ -26,7 +26,6 @@ const DoctorSlotPage = ({ doctorId }) => {
           );
           alert('Slot added successfully!');
           navigate("/hospital/slots") 
-          // You may want to redirect or perform additional actions after successful slot addition.
         } catch (error) {
           console.error('Error adding slot:', error);
           alert('Error adding slot. Please try again.');

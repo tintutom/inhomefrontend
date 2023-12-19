@@ -1,8 +1,8 @@
 
 
-// export const baseUrl = "http://127.0.0.1:8001/";
+export const baseUrl = "http://127.0.0.1:8001/";
 
-export const baseUrl = "https://tintutom.online/";
+// export const baseUrl = "https://tintutom.online/";
 export const mediaUrl= "https://inhome.s3.amazonaws.com/";
 
 
@@ -34,13 +34,11 @@ export const hospitalverifyToken ="doctors/verifyToken"
 export const hospitalDepartmentAdd = "doctors/department_add"
 export const hospitalDepartment = "doctors/department_details"
 export const addDoctor = "doctors/doctor_add"
-
 export const doctorlist = "doctors/doctor"
 export const doctorAvailable = "doctors/doctor_available"
 export const bookinglist = "doctors/booking_details"
-
 export const doctorAdditionalInfo = "doctors/<int:doctor_id>/additional-details"
-// Admin
+
 
 //Admin
 export const adminDashboard = 'cadmin/'

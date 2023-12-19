@@ -1,5 +1,3 @@
-
-
 import { NavDropdown } from 'react-bootstrap';
 import logo from '../../assets/images/logo.png';
 import userImg from '../../assets/images/avatar-icon.png';
