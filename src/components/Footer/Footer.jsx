@@ -1,4 +1,3 @@
-// Footer.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
@@ -22,8 +21,8 @@ const quickLinks = [
     links: [
       { path: '/home', display: 'Home' },
       { path: '/', display: 'About Us' },
-      { path: '/services', display: 'Services' },
-      { path: '/blog', display: 'Blog' },
+      // { path: '/services', display: 'Services' },
+      // { path: '/blog', display: 'Blog' },
     ]
   },
   {
@@ -31,8 +30,8 @@ const quickLinks = [
     links: [
       { path: '/find-a-doctor', display: 'Find a Doctor' },
       { path: '/', display: 'Request an Appointment' },
-      { path: '/', display: 'Find a Location' },
-      { path: '/', display: 'Find an Opinion' },
+      // { path: '/', display: 'Find a Location' },
+      // { path: '/', display: 'Find an Opinion' },
     ]
   },
   {
@@ -47,20 +46,20 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className='bg-blue-200 py-20'>
+    <footer className='bg-blue-200 py-10'>
       <div className='container mx-auto'>
         <div className='flex flex-col md:flex-row justify-center md:justify-between gap-[30px]'>
-          <div className="text-center mb-8 md:mb-0">
+          <div className="text-center mb-4 md:mb-0">
             <img src={logo} alt='' />
-            <p className='text-[16px] leading-7 font-[400] text-textColor mt-4'>
+            <p className='text-[14px] leading-5 font-[400] text-textColor mt-2'>
               Copyright @ {year} developed by Tintu Tom all right reserved.
             </p>
-            <div className='flex items-center gap-3 mt-4'>
+            <div className='flex items-center gap-3 mt-2'>
               {socialLinks.map((link, index) => (
                 <a
                   href={link.path}
                   key={index}
-                  className='w-9 h-9 border border-solid border-[#181A1E] rounded-full flex items-center 
+                  className='w-7 h-7 border border-solid border-[#181A1E] rounded-full flex items-center 
                   justify-center group hover:bg-primaryColor hover:border-none'
                   target="_blank"
                   rel="noopener noreferrer"
@@ -73,13 +72,13 @@ const Footer = () => {
 
           {quickLinks.map((section, index) => (
             <div key={index} className="text-center">
-              <h2 className='text-[20px] leading-[30px] font-[700] mb-6 text-headingColor'>
+              <h2 className='text-[16px] leading-[20px] font-[700] mb-3 text-headingColor'>
                 {section.title}
               </h2>
               <ul>
                 {section.links.map((item, index) => (
-                  <li key={index} className='mb-4'>
-                    <Link to={item.path} className='text-[16px] leading-7 font-[400] text-textColor'>
+                  <li key={index} className='mb-2'>
+                    <Link to={item.path} className='text-[14px] leading-5 font-[400] text-textColor'>
                       {item.display}
                     </Link>
                   </li>
@@ -94,136 +93,3 @@ const Footer = () => {
 }
 
 export default Footer;
-
-// import React from 'react'
-// import { Link } from 'react-router-dom'
-// import logo from '../../assets/images/logo.png';
-// import {RiLinkedinFill} from 'react-icons/ri';
-// import { AiFillYoutube, AiFillGithub, AiOutlineInstagram } from 'react-icons/ai';
-
-// const socialLinks =[
-//   {
-//     path:"https://github.com/tintutom",
-//     icon:<AiFillGithub className='group-hover:text-white w-4 h-5' />
-//   },
-//   {
-//     path:"https://www.google.com/tintutom",
-//     icon:<AiFillGithub className='group-hover:text-white w-4 h-5' />
-//   },
-//   {
-//     path:"https://www.linkedin.com/in/tintutom",
-//     icon:<RiLinkedinFill className='group-hover:text-white w-4 h-5' />
-//   },
-// ];
-// const quickLinks01=[
-//   {
-//     path:'/home',
-//     display:'Home',
-//   },
-//   {
-//     path:'/',
-//     display:'About Us'
-//   },
-//   {
-//     path:'/services',
-//     display:'Services',
-//   },
-//   {
-//     path:'/blog',
-//     display:"Blog",
-//   },
-// ];
-
-// const quickLinks02=[
-//   {
-//     path:'/find-a-doctor',
-//     display:'Find a Doctor',
-//   },
-//   {
-//     path:'/',
-//     display:'Request an Appoinment'
-//   },
-//   {
-//     path:'/',
-//     display:'Find a Location',
-//   },
-//   {
-//     path:'/',
-//     display:"Find a Opinion",
-//   },
-// ];
-
-// const quickLinks03=[
-//   {
-//     path:'/contact',
-//     display:'Contact Us',
-//   },
-// ];
-// const Footer = () => {
-//   const year = new Date().getFullYear();
-
-//   return (
-//     <footer className='bg-blue-200 py-20'>
-//       <div className='contaier'>
-//         <div className='flex justify-between flex-col md:flex-row flex-wrap gap-[30px]'>
-//           <div>
-//             <img src={logo} alt=''/>
-//             <p className='text-[16px] leading-7 font-[400] text-textColor mt-4'>
-//               Copyright @ {year} developed by Tintu Tom all right reserved.
-//             </p>
-//             <div className='flex items-center gap-3 mt-4'>
-//               {socialLinks.map((link,index)=>(
-//                 <Link to={link.path}
-//                   key={index}
-//                   className='w-9 h-9 border border-solid border-[#181A1E] rounded-full flex items-center 
-//                   justify-center group hover:bg-primaryColor hover:border-none'>
-//                     {link.icon}
-//                   </Link>
-//               ))}
-//             </div>  
-//           </div>
-
-//           <div>
-//             <h2 className='text-[20px] leading-[30px] font-[700] mb-6 text-headingColor'>
-//               Quick Links
-//             </h2>
-//             <ul>
-//               {quickLinks01.map((item,index)=> <li key={index} className='mb-4'>
-//                 <Link to={item.path} className='text-[16px] leading-7 font-[400] text-textColor'>
-//                   {item.display}
-//                 </Link></li>)}
-//             </ul>
-//           </div>
-
-//           <div>
-//             <h2 className='text-[20px] leading-[30px] font-[700] mb-6 text-headingColor'>
-//               I want to
-//             </h2>
-//             <ul>
-//               {quickLinks02.map((item,index)=> <li key={index} className='mb-4'>
-//                 <Link to={item.path} className='text-[16px] leading-7 font-[400] text-textColor'>
-//                   {item.display}
-//                 </Link></li>)}
-//             </ul>
-//           </div>
-
-
-//           <div>
-//             <h2 className='text-[20px] leading-[30px] font-[700] mb-6 text-headingColor'>
-//               Support
-//             </h2>
-//             <ul>
-//               {quickLinks03.map((item,index)=> <li key={index} className='mb-4'>
-//                 <Link to={item.path} className='text-[16px] leading-7 font-[400] text-textColor'>
-//                   {item.display}
-//                 </Link></li>)}
-//             </ul>
-//           </div>
-
-//         </div>
-//       </div>
-//     </footer>
-//   )
-// }
-
-// export default Footer
