@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import Cookies from 'js-cookie';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,13 +10,35 @@ const FeedbackForm = () => {
   const [hover, setHover] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const [showForm, setShowForm] = useState(true);
+  const [hasAppointment, setHasAppointment] = useState(false);
 
   const userId = Cookies.get('id');
   const { id } = useParams();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const checkAppointment = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}upcoming-appointments/${userId}/`);
+
+        const hasAppointmentWithDoctor = response.data.some(appointment => appointment.doctor.id === parseInt(id, 10));
+        
+        setHasAppointment(hasAppointmentWithDoctor);
+        
+      } catch (error) {
+        console.error('Error checking appointment status:', error.message || error);
+      }
+    };
+
+    checkAppointment();
+  }, [userId, id]);
+
   const handleSubmitReview = async (e) => {
     e.preventDefault();
+    if (!hasAppointment) {
+      console.log("User does not have an appointment with this doctor. Cannot submit feedback.");
+      return;
+    }
     const feedbackData = {
       user: parseInt(userId, 10),
       doctor: parseInt(id, 10),
@@ -41,6 +63,7 @@ const FeedbackForm = () => {
   return (
     <div>
       {showForm ? (
+        hasAppointment ? (
         <form onSubmit={handleSubmitReview}>
           <div>
             <h3 className='text-headingColor txt-[16px] leading-6 font-semibold mb-4 mt-0'>
@@ -95,13 +118,16 @@ const FeedbackForm = () => {
             </button>
           </div>
         </form>
-      ) : (
-        <div>
-          {/* Display the submitted feedback here */}
-          <p>Thank you for your feedback!</p>
-          {/* You can add more details or customize this section */}
-        </div>
-      )}
+        ) : (
+          <p>You do not have an appointment with this doctor. Feedback cannot be submitted.</p>
+        )
+        ) : (
+          <div>
+            {/* Display the submitted feedback here */}
+            <p>Thank you for your feedback!</p>
+            {/* You can add more details or customize this section */}
+          </div>
+        )}
     </div>
   );
 };

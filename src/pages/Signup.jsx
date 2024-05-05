@@ -145,7 +145,7 @@ function Signup() {
               <div className='mb-5'>
                 <input
                   type='text'
-                  placeholder='Enter Your Emaillllllllll'
+                  placeholder='Enter Your Email'
                   name='email'
                   value={email}
                   onChange={handleEmailChange}

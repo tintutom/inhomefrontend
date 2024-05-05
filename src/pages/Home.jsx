@@ -16,7 +16,9 @@ import ServiceList from '../components/Services/ServiceList';
 import DoctorsList from '../components/Doctors/DoctorsList';
 import FaqList from '../components/Faq/FaqList';
 import Testimonial from '../components/Testimonial/Testimonial';
+import Cookies from 'js-cookie';
 const Home = () => {
+  const usertoken=Cookies.get("jwt_user")
   return (
     <>
     <section className='hero__section pt-[60px] 2xl:h-[800px]'>
@@ -28,7 +30,7 @@ const Home = () => {
               <h1 className='text-[5vw] md:text-[60px] md:leading-[7vw] text-headingColor font-[800]'>
                 We help patients live a healthy, longer life. 
               </h1>
-              <p className='text__para'>jthyrtgeghthyrtgefegste grewfgw3 trefgrwr</p>
+              <p className='text__para'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
               <button className='btn'>Request an Appoinment</button>
             </div>
             {/*=========== hero counter=========*/}
@@ -85,11 +87,19 @@ const Home = () => {
         <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'>
           World-class care for everyone. Our health system offers unmathed, expert health care. From the lab to the clinic.
         </p>
+        {usertoken ?(
         <Link to='/doctors' className='w-[44px] h-[44px] rounded-full border border-solid border-
         [#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor
         hover:border-none'>
           <BsArrowRight className='group-hover:text-white w-6 h-5' />
         </Link>
+        ):(
+        <Link to='/login' className='w-[44px] h-[44px] rounded-full border border-solid border-
+        [#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor
+        hover:border-none'>
+          <BsArrowRight className='group-hover:text-white w-6 h-5' />
+        </Link>
+        )}
       </div>
       </div>
 
@@ -103,11 +113,19 @@ const Home = () => {
         <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'>
           World-class care for everyone. Our health system offers unmathed, expert health care. From the lab to the clinic.
         </p>
+        {usertoken ?(
         <Link to='/doctors' className='w-[44px] h-[44px] rounded-full border border-solid border-
         [#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor
         hover:border-none'>
           <BsArrowRight className='group-hover:text-white w-6 h-5' />
         </Link>
+        ):(
+        <Link to='/login' className='w-[44px] h-[44px] rounded-full border border-solid border-
+        [#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor
+        hover:border-none'>
+          <BsArrowRight className='group-hover:text-white w-6 h-5' />
+        </Link>
+        )}
       </div>
       </div>
       <div className='py-[30px] px-5'>
@@ -120,19 +138,27 @@ const Home = () => {
         <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'>
           World-class care for everyone. Our health system offers unmathed, expert health care. From the lab to the clinic.
         </p>
+        {usertoken ?(
         <Link to='/doctors' className='w-[44px] h-[44px] rounded-full border border-solid border-
         [#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor
         hover:border-none'>
           <BsArrowRight className='group-hover:text-white w-6 h-5' />
         </Link>
+        ):(
+        <Link to='/login' className='w-[44px] h-[44px] rounded-full border border-solid border-
+        [#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor
+        hover:border-none'>
+          <BsArrowRight className='group-hover:text-white w-6 h-5' />
+        </Link>
+        )}
       </div>
       </div>
 
     </div>
     </section>
-    < About />
+    {/* < About /> */}
     {/*==========service section start=============== */}
-    <section>
+    {/* <section>
       <div className='container'>
         <div className='xl:w-[470px] mx-auto'>
           <h2 className='heading text-center'>Our Medical Services</h2>
@@ -142,10 +168,10 @@ const Home = () => {
         </div>
         <ServiceList />
       </div>
-    </section>
+    </section> */}
     {/*==========service section end=============== */}
     {/*==========feature section end=============== */}
-    <section>
+    {/* <section>
       <div className='container'>
         <div className='flex items-center justify-between flex-col lg:flex-row'>
           <div className='xl:w-[670px]'>
@@ -162,7 +188,7 @@ const Home = () => {
             </ul>
             <Link to='/'><button className='btn'>Learn More</button></Link>
           </div>
-          {/*========freature img========== */}
+
           <div className='relative z-10 xl:w-[770px] flex justify-end mt-[50px] lg:mt-0'>
             <img src={featureImg} className='w-3/4' alt='' />
 
@@ -196,7 +222,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </section>
+    </section> */}
     {/*==========feature section end=============== */}
     {/*==========our great doctors=============== */}
 
@@ -213,8 +239,8 @@ const Home = () => {
     </section>
     {/*======faq section============== */}
     <section>
-      <div className='container'>
-        <div className='flex justify-between gap-[50px] lg:gap-0'>
+      <div className='container mt-' >
+        <div className='flex justify-between gap-[100px] lg:gap-2'>
           <div className='w-1/2 hidden md:block'>
             <img src={faqImg} alt='' />
           </div>
@@ -229,7 +255,7 @@ const Home = () => {
     </section>
     {/*======================testimonial============ */}
     <section >
-      <div className='container'>
+      <div className='container mt-3'>
       <div className='xl:w-[470px] mx-auto'>
           <h2 className='heading text-center'>Whats our patients says...</h2>
           <p className='text__para text-center'>

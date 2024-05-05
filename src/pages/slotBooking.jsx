@@ -18,6 +18,8 @@ const SlotBooking=()=>{
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
   const [selectedSlotId, setSelectedSlotId] = useState(null);
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
+
 
   const { id } = useParams();
   const user_id = Cookies.get('id');
@@ -113,10 +115,18 @@ const SlotBooking=()=>{
   const handleSubmit = (e) => {
 
     e.preventDefault();
-    console.log('Button clicked!');
-    navigate('/addlocation',{ state: { users, doctor,selectedDate,selectedTimeSlot,selectedSlotId } })
-    console.log(doctor.name,"name")
-  };
+    if (selectedSlotId) {
+      console.log('Button clicked!');
+      navigate('/addlocation',{ state: { users, doctor,selectedDate,selectedTimeSlot,selectedSlotId } })
+      console.log(doctor.name,"name")
+    }else {
+      // Display a message or take appropriate action
+      setErrorMessage('Please select an appointment slot before proceeding.');
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 5000);
+    }
+  }
   
   return (
     <div>
@@ -217,10 +227,13 @@ const SlotBooking=()=>{
       </div>         
     </div>
       <div className="p-6 flex justify-end">
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+      {/* {selectedSlotId ? ( */}
         <button className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-md mr-4 "   
         onClick={handleSubmit}
         >Add Address</button>
-        {/* <Map  /> */}
+        
+        
       </div>            
     
     </div>

@@ -4,7 +4,7 @@ export const baseUrl = "http://127.0.0.1:8001/";
 
 // export const baseUrl = "https://tintutom.online/";
 export const mediaUrl= "https://inhome.s3.amazonaws.com/";
-
+// export const mediaUrl= "http://127.0.0.1:8001/"
 
 
 // User

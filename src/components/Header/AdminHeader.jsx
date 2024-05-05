@@ -87,18 +87,23 @@ const AdminHeader = () => {
 
   const navigate = useNavigate();
   const [logout, setLogout] = useState(false);
-
+  const handleLogout = () => {
+    dispatch(logout())
+    // setLogout(true);
+  };
+  
   useEffect(() => {
-    if (logout) {
+    const jwtToken = Cookies.get('jwt-admin');
+
+    if (!jwtToken && email) {
       Cookies.remove('jwt-admin');
       Cookies.remove('role', 'admin');
+      dispatch(logout());
       navigate('/admin/login');
     }
-  }, [logout, navigate]);
+  }, [dispatch,email, navigate]);
 
-  const handleLogout = () => {
-    setLogout(true);
-  };
+  
 
   const toggleProfileDropdown = () => {
     setShowProfileDropdown(!showProfileDropdown);
