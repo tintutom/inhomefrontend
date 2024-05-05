@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import Cookies from 'js-cookie';
@@ -29,6 +30,7 @@ const ChatComponent = () => {
   const connectToWebSocket = async (appointmentId) => {
     if (!appointmentId) return;
 
+<<<<<<< HEAD
     try {
       // Fetch existing messages
       const response = await fetch(`${baseUrl}chat/${appointmentId}/`);
@@ -54,10 +56,48 @@ const ChatComponent = () => {
         console.log('Received message:', message.data);
         setChatMessages((prevMessages) => [...prevMessages, data]);
       };
+=======
+    // const newClient = new W3CWebSocket(`ws://127.0.0.1:8001/ws/chat/${appointmentId}/`);
+
+    const newClient = new W3CWebSocket(`wss://tintutom.online/ws/chat/${appointmentId}/`);
+    setClient(newClient);
+
+    newClient.onopen = () => {
+      console.log('WebSocket Client Connected');
+      // fetchExistingMessages();
+      // fetchExistingMessages(appointmentId);
+    };
+
+    newClient.onmessage = (message) => {
+      const data = JSON.parse(message.data);
+      console.log('Received message:', message.data);
+      setChatMessages((prevMessages) => [...prevMessages, data]);
+    };
+   
+    // Fetch existing messages when the WebSocket connection is established
+    const fetchExistingMessages = async () => {
+      try {
+          const response = await fetch(`${baseUrl}chat/${appointmentId}/`);
+          const data = await response.json();
+          console.log("dataaaaaaaaa",data)
+          const messagesTextArray = data.map(item => ({
+            message : item.message,
+            sendername : item.sendername,
+          }));
+          setChatMessages(messagesTextArray);
+          
+      } catch (error) {
+          console.error('Error fetching existing messages:', error);
+      }
+      console.log('Chat messages:', chatMessages);
+    };
+    fetchExistingMessages();
+>>>>>>> 3d271e17940e2f36b1c6a0350ff3aeca561f4970
 
       return () => {
         newClient.close();
       };
+<<<<<<< HEAD
     } catch (error) {
       console.error('Error fetching or connecting:', error);
     }
@@ -78,6 +118,31 @@ const ChatComponent = () => {
     console.log({ message });
     setMessage('');
   };
+=======
+    };
+
+ 
+
+    
+
+    const handleAppointmentClick = (appointment) => {
+      setSelectedAppointment(appointment);
+      setChatMessages([]);
+      connectToWebSocket(appointment.id);
+    };
+    const isCurrentUser = selectedAppointment && selectedAppointment.user.id === userId;
+  
+
+    const sendMessage = () => {
+      if (message.trim() === '' || !client || !selectedAppointment) return;
+  
+      const sendername = "John Doe";
+  
+      client.send(JSON.stringify({ message, sendername }));
+      console.log({message})
+      setMessage('');
+    };
+>>>>>>> 3d271e17940e2f36b1c6a0350ff3aeca561f4970
 
   
 
@@ -107,7 +172,7 @@ const ChatComponent = () => {
                     
       <div className="chat-container">
         <div className="appointments-list">
-          <h2>Upcoming Appointments</h2>
+          <h2>Connect With Doctors</h2>
           <ul>
           {appointments.map((appointment) => (
             <li key={appointment.id} onClick={() => handleAppointmentClick(appointment)}>

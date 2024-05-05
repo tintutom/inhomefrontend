@@ -31,7 +31,7 @@ const DocChatComponent = () => {
   const connectToWebSocket = (appointmentId) => {
     if (!appointmentId) return;
 
-    const newClient = new W3CWebSocket(`ws://127.0.0.1:8001/ws/chat/${appointmentId}/`);
+    const newClient = new W3CWebSocket(`wss://tintutom.online/ws/chat/${appointmentId}/`);
     setClient(newClient);
 
     newClient.onopen = () => {
@@ -136,7 +136,7 @@ const DocChatComponent = () => {
                 
                 </div>
               </div>
-              <div className="chat-messages">
+              <div className="chat-messages mt-4">
                 {chatMessages.map((msg, index) => (
                   <div key={index} className="message">
                     <strong>{msg.sendername}:</strong> {msg.message}

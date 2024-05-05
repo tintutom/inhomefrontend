@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import { NavDropdown } from 'react-bootstrap';
 // import logo from '../../assets/images/logo.png';
 // import userImg from '../../assets/images/avatar-icon.png';
@@ -251,6 +252,8 @@
 
 
 
+=======
+>>>>>>> 3d271e17940e2f36b1c6a0350ff3aeca561f4970
 
 import { NavDropdown } from 'react-bootstrap';
 import logo from '../../assets/images/logo.png';

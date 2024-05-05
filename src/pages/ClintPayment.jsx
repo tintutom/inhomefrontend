@@ -175,8 +175,8 @@ import { mediaUrl,baseUrl } from '../utils/Constants';
                         <div>
                         <p className="font-bold">Email:</p>
                         <p>{users.email}</p>
-                        <p className="font-bold">Address:</p>
-                        <p>{users.address}</p>
+{/*                         <p className="font-bold">Address:</p>
+                        <p>{users.address}</p> */}
                         </div>
                         <div>
                         <p className="font-bold">Date:</p>
