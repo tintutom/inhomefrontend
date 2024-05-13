@@ -11,8 +11,10 @@ const ChatComponent = () => {
   const [appointments, setAppointments] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [client, setClient] = useState(null);
-  const userId = Cookies.get('id');
+  console.log("ccccccccccccccccccc",chatMessages)
 
+  const userId = Cookies.get('id');
+  console.log(userId)
   useEffect(() => {
     const fetchUpcomingAppointments = async () => {
       try {
@@ -27,48 +29,63 @@ const ChatComponent = () => {
 
     fetchUpcomingAppointments();
   }, [userId]);
-  const connectToWebSocket = async (appointmentId) => {
+
+  const connectToWebSocket = (appointmentId) => {
     if (!appointmentId) return;
 
-    // const newClient = new W3CWebSocket(`ws://127.0.0.1:8001/ws/chat/${appointmentId}/`);
+    const newClient = new W3CWebSocket(`ws://127.0.0.1:8001/ws/chat/${appointmentId}/`);
 
-    const newClient = new W3CWebSocket(`wss://tintutom.online/ws/chat/${appointmentId}/`);
+    // const newClient = new W3CWebSocket(`wss://tintutom.online/ws/chat/${appointmentId}/`);
     setClient(newClient);
 
     newClient.onopen = () => {
       console.log('WebSocket Client Connected');
+      console.log(newClient)
       // fetchExistingMessages();
       // fetchExistingMessages(appointmentId);
     };
-
+    // Inside the onmessage event handler in the frontend
     newClient.onmessage = (message) => {
       const data = JSON.parse(message.data);
-      console.log('Received message:', message.data);
-      setChatMessages((prevMessages) => [...prevMessages, data]);
+      console.log('Received message:', data);
+
+      if (data.type === 'existing_messages') {
+        console.log('Existing messages:', data.data);
+        // Handle existing messages here...
+        setChatMessages(data.data); // Assuming you have a state variable to store chat messages
+      } 
     };
+
+    
+
+    // newClient.onmessage = (message) => {
+    //   const data = JSON.parse(message.data);
+    //   console.log('Received message:', data);
+    //   setChatMessages((prevMessages) => [...prevMessages, data.data]);
+    // };
    
     // Fetch existing messages when the WebSocket connection is established
-    const fetchExistingMessages = async () => {
-      try {
-          const response = await fetch(`${baseUrl}chat/${appointmentId}/`);
-          const data = await response.json();
-          console.log("dataaaaaaaaa",data)
-          const messagesTextArray = data.map(item => ({
-            message : item.message,
-            sendername : item.sendername,
-          }));
-          setChatMessages(messagesTextArray);
+    // const fetchExistingMessages = async () => {
+    //   try {
+    //       const response = await fetch(`${baseUrl}chat/${appointmentId}/`);
+    //       const data = await response.json();
+    //       console.log("dataaaaaaaaa",data)
+    //       const messagesTextArray = data.map(item => ({
+    //         message : item.message,
+    //         sendername : item.sendername,
+    //       }));
+    //       setChatMessages(messagesTextArray);
           
-      } catch (error) {
-          console.error('Error fetching existing messages:', error);
-      }
-      console.log('Chat messages:', chatMessages);
-    };
-    fetchExistingMessages();
+    //   } catch (error) {
+    //       console.error('Error fetching existing messages:', error);
+    //   }
+    //   console.log('Chat messages:', chatMessages);
+    // };
+    // fetchExistingMessages();
 
-      return () => {
-        newClient.close();
-      };
+    //   return () => {
+    //     newClient.close();
+    //   };
 // <<<<<<< HEAD
   //   } catch (error) {
   //     console.error('Error fetching or connecting:', error);
@@ -95,25 +112,31 @@ const ChatComponent = () => {
 
  
 
-    
+    const sendMessage = () => {
+      if (message.trim() === '' || !client || !selectedAppointment) return;
+  
+      // const sendername = "John Doe";
+      const sendername = localStorage.getItem('user_username');
+
+  
+      client.send(JSON.stringify({ message, sendername }));
+      // console.log({message})
+      setMessage('');
+      setChatMessages((prevMessages) => [
+        ...prevMessages,
+        { message, sendername },
+      ]);
+    };
 
     const handleAppointmentClick = (appointment) => {
       setSelectedAppointment(appointment);
       setChatMessages([]);
       connectToWebSocket(appointment.id);
     };
-    const isCurrentUser = selectedAppointment && selectedAppointment.user.id === userId;
+    // const isCurrentUser = selectedAppointment && selectedAppointment.user.id === userId;
   
 
-    const sendMessage = () => {
-      if (message.trim() === '' || !client || !selectedAppointment) return;
-  
-      const sendername = "John Doe";
-  
-      client.send(JSON.stringify({ message, sendername }));
-      console.log({message})
-      setMessage('');
-    };
+    
 // >>>>>>> 3d271e17940e2f36b1c6a0350ff3aeca561f4970
 
   

@@ -63,8 +63,12 @@ const UserAppointments = () => {
     const fetchAppointments = async () => {
       try {
         const response = await axios.get(`${baseUrl}upcoming-appointments/${userId}`);
-        setAppointments(response.data);
-        console.log(response.data)
+        // Filter appointments based on date and time greater than current date and time
+        const filteredAppointments = response.data.filter(appointment =>
+          new Date(`${appointment.date} ${appointment.end_time}`) > new Date()
+        );
+        setAppointments(filteredAppointments);
+        console.log(response)
       } catch (error) {
         console.error('Error fetching appointments:', error);
       }
